@@ -1,0 +1,234 @@
+#import directives
+import os
+import random
+#global definintions
+teams = ["washington winners",
+         "los angeles losers",
+         "chicago champions",
+         "dallas defeateds"]
+
+def cls(): #convenience alias, simply clears terminal screen.
+    os.system("cls")
+
+def title_screen():
+    print("VERY SIMPLE FOOTBALL GAME 2025\nby aidan bossle [v0.2]\n\n")
+    ready_to_play = str(input("ENTER ANY INPUT TO PLAY: ")) #easy way to progress without needing to check input  or asking user to type specific answer!
+    cls()
+    
+def intro(): #this section sets up the player's profile and team.
+    print("Congratulations! You just got your very first job as a Head Coach in the VERY BIG FOOTBALL LEAGUE [VBFL]! Of course, as your agent, I have some boring paperwork for you to fill out. I know, I know, but it's a formality. Here, i'll help you through it.")
+    anything = str(input("TYPE ANYTHING AND HIT ENTER TO CONTINUE:\n> ")) #used the trick again here!
+    cls()
+    while True:
+        while True: #loops until user confirms their info
+            print("First we have to do the basic I.D. stuff...")
+            first_name = str(input("Your first name goes here: "))
+            last_name = str(input("And your last name there: "))
+            print("Mind reminding me which team you're signing with?")
+            print(*teams, sep='\n')
+            team = str(input("Enter a team from the list above:"))
+            if team.lower() in teams:
+                cls()
+                break
+            else:
+                cls()
+                print("You filled out the form wrong - enter a valid team on the list and fill it out properly!\n")
+        print("Alright, I remember now! You're " + first_name + " " + last_name + " with the " + team + "!")
+        resp = str(input("Is that correct? (ENTER 'YES' OR 'NO'.)"))
+        if resp.upper() == "YES": #makes it not case-sensitive
+            cls()
+            print("Welcome to the, " + team + " coach! Ready for your first game?")
+            anything = str(input("TYPE ANYTHING AND HIT ENTER TO CONTINUE:\n> "))
+            break
+        elif resp.upper() == "NO":
+            print("Alright, let's try this again...")
+    return team
+
+
+def homepage():
+    cls()
+    while True:
+        print("SUPER DUPER COACHING PORTAL 9000")
+        print("WELCOME, COACH! WHICH ACTION WOULD YOU LIKE TO PERFORM:\n- PLAY SEASON GAME\n- RECRUIT PLAYERS\n- CLOCK OUT (QUITS GAME)")
+        resp = str(input("ENTER ACTION: > "))
+        if resp.upper() == "PLAY SEASON GAME":
+            opponent = random.choice(teams) #generates the opponent you will face.
+            return opponent, resp.upper()
+        elif resp.upper() == "RECRUIT PLAYERS":
+            print("This feature has not been implemented yet.")
+        elif resp.upper() == "CLOCK OUT":
+            os._exit() #system exit command - kills program
+        else:
+            cls()
+            print("Invalid input. Enter an option from the list and try again.\n\n")
+
+def game_start():
+    print("THIS WEEK'S MATCHUP: THE " + players_team.upper() + " VERSUS THE " + opp.upper() + " ON PRIMETIME VBFL WEDNESDAY NIGHT FOOTBALL!") #PRINTS GAME INFO
+    #TODO display stats later?
+    ready_to_play = str(input("ENTER ANY INPUT TO BEGIN GAME: ")) #this simple advance prompt again
+    print("COIN TOSS!") #MINIGAME #1: COIN TOSS!
+    choice = str(input("'HEADS' OR 'TAILS': ")) #player choses
+    coinflip = random.randint(1,2) #coinflip result generated
+    if coinflip == 1:
+        if choice.upper() == "HEADS":
+            print("Heads! You Win!")
+            while True:
+                rec_def = str(input("Would you like to 'RECEIVE' the ball now or 'DEFER' and receive second half?: "))
+                if rec_def == "RECEIVE" or rec_def == "DEFER":
+                    break
+                else:
+                    print("INVALID CHOICE - PICK 'RECEIVE' OR 'DEFER' & TRY AGAIN...")
+        else:
+            print("Heads! You Lose!")
+    elif coinflip == 2:
+        if choice.upper() == "TAILS":
+            print("Tails! You Win!")
+            while True:
+                rec_def = str(input("Would you like to 'RECEIVE' the ball now or 'DEFER' and receive second half?: "))
+                if rec_def == "RECEIVE" or rec_def == "DEFER":
+                    break
+                else:
+                    print("INVALID CHOICE - PICK 'RECEIVE' OR 'DEFER' & TRY AGAIN...")
+        else:
+            print("Tails! You Lose!")
+
+    #now the coin toss picking process is over, we can basically loop this part until the game concludes.
+    while True:
+        if rec_def == "RECEIVE": #actual start of offense
+            yardline = 0
+            down = 0
+            my_score = 0
+            their_score = 0
+            def report_yards():
+                print("On the " + yardline + " yard line, it's now down number" + down)
+            #KICKOFF CHOICES
+            
+            cls() #quick aside to mention five or die rules
+            print("Hey coach, I should probably mention something. This league is different from most others - we play FIVE OR DIE. You only get 5 plays to make it to the endzone. Good luck!")
+            anything = str(input("TYPE ANYTHING AND HIT ENTER TO CONTINUE:\n> ")) #used the trick again here!
+            cls()
+
+            print("KICKOFF!") #MINIGAME #2: KICKOFF!
+            while True:
+                print("CHOSE WHETHER TO 'KNEE' FOR A TOUCHBACK, LET IT 'BOUNCE' THROUGH ENDZONE, OR 'RETURN' THE BALL.")
+                action = str(input("Action: "))
+                if action != "KNEE" and action != "BOUNCE" and action != "RETURN":
+                    print("INVALID CHOICE - PICK 'KNEE', 'BOUNCE', OR 'RETURN'.")
+                elif action == "KNEE":
+                    print("Your returned tried to knee on it and...")
+                    kneerandom = random.randint(1,20)
+                    if 0 <= kneerandom and kneerandom <= 19:
+                        print("Successfully secured a touchback!")
+                        yardline = 25
+                        break
+                    elif kneerandom > 19:
+                        print("Uh oh! You dropped the ball, knocked it forward, and had to run it out of the endzone for a gain of only 1 yard.")
+                        yardline = 1
+                        break
+                elif action == "BOUNCE":
+                    print("You let the ball bounce and...")
+                    bouncerandom = random.randint(0,100)
+                    if 0 <= bouncerandom and bouncerandom < 98:
+                        print("It went through the back of the endzone for a touchback.")
+                        yardline = 25
+                        break
+                    elif bouncerandom <= 98:
+                        print("It stopped bouncing at the 1 yard line, and you had to recover it and start from there...")
+                        yardline = 1
+                        break
+                elif action == "RETURN":
+                    print("You elected to return the ball and... ")
+                    returnrandom = random.randint(0,100)
+                    if 0 <= returnrandom and returnrandom >= 50:
+                        print("Normal return. You brought it back to the touchback line.")
+                        yardline = 25
+                        break
+                    elif 50 < returnrandom and returnrandom <= 80:
+                        print("Good return, brought it up to the 30!")
+                        yardline = 30
+                        break
+                    elif 80 < returnrandom and returnrandom <= 98:
+                        print("The returner found a huge hole and got the ball to the 50!")
+                        yardline = 50
+                        break
+                    elif returnrandom == 99:
+                        print("The returner tripped, fell, tripped again, and dropped the ball on the 1, and had to dive to recover it. Ouch.")
+                        yardline = 1
+                        break
+                    elif returnrandom == 100:
+                        print("The returner fumbled the ball. BUT, so did the other team. He then picked it up and ran it to the OTHER teams' one yard line...")
+                        yardline = 99
+                        break
+                else:
+                    print("[FATAL ERROR]: SOMETHING IS VERY, VERY WRONG IF THIS TRIGGERS...")
+
+            for _ in range(5): #5 or die offensiver plays
+                print("CHOSE AN OFFENSIVE PLAYCALL:\n - 'PASS'\n - 'RUN'\n - 'RPO' (RUN PASS OPTION)\n - 'FIELD GOAL'") #MINIGAME 3: PLAYCALLING
+                playcall = str(input("> "))
+                if playcall == "PASS": #PASSING PLAY LOGIC
+                    dist = random.randint(0,20)
+                    if dist == 1:
+                        pass
+                    if dist >=2 and dist <=10: #moderate gain/loss
+                        roll = random.randint(0,2)
+                        if roll == 1:
+                            print("Gain of 10 yards.")
+                            yards += 10
+                            break
+                        if roll == 2:
+                            print("Gain of 5 yards.")
+                            yards += 5
+                            break
+                        if roll == 3:
+                            print("Loss of 5 yards.")
+                            if yards >= 5:
+                                yards -= 5
+                                break
+                            else:
+                                break
+                    if dist == 20:
+                        pass
+                    
+                elif playcall == "RUN":
+                    pass
+                elif playcall == "RPO":
+                    pass
+                elif playcall == "FIELD GOAL":
+                    if yards <= 50:
+                        print("Missed field goal, not nearly enough leg.")
+                        break
+                    if yards > 50:
+                        fg = random.randint(1,3)
+                        if fg == 1:
+                            print("FG attempt missed left.")
+                            break
+                        elif fg ==2:
+                            print("FG attempt made!")
+                            score += 3
+                            break
+                        elif fg == 3:
+                            print("FG attempt missed right.")
+                            break
+                
+            rec_def = "DEFER" #they aren't actually deferring, i'm just reusing the variable to loop for every change of possession.
+        elif rec_def == "DEFER": #MNIGAME 4: DEFENSIFE DRIVE
+            print("Full defense playcalling hasn't been implemented yet, but a basic sim will run.")
+            defense_drive = random.randint(0,5)
+            if defense_drive == 1:
+                print("Opposing team offensive drive resulted in a Touchdown & Extra Point for a gain of 7.")
+            elif defense_drive == 2:
+                print("Opposing team offensive drive resulted in a Touchdown but they missed the Extra Point.")
+            elif defense_drive == 3:
+                print("Defensive success - secured a turnover.")
+            elif defense_drive == 4:
+                print("Defensive success - secured a turnover.")
+
+            rec_def = "RECEIVE" #again, not receiving, just flips who will get the ball after score.
+        else:
+            print("[FATAL ERROR]: THIS SHOULD NEVER TRIGGER...")
+
+title_screen()
+players_team = intro()
+opp,should_play_game = homepage()
+if should_play_game.upper() == "PLAY SEASON GAME":
+    game_start()
